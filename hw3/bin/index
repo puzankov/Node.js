@@ -1,0 +1,88 @@
+#!/usr/bin/env node
+var program = require('commander');
+var fs = require('fs');
+var aesjs = require('aes-js');
+
+
+var key;
+program
+    .version('0.0.1')
+    .option('-i, --inFile [inDir]', 'set inFile')
+    .option('-o, --outFile [outDir]', 'set outFile')
+    .option('-k, --keyFile [keyDir]', 'set keyFile')
+
+program
+    .command('encode')
+    .alias('e')
+    .description('Encode inFile with keyFile to outFile')
+    .action(function(){
+        encodeFile(program.inFile, program.keyFile, program.outFile);
+    });
+
+program
+    .command('decode')
+    .alias('d')
+    .description('Decode inFile with keyFile to outFile')
+    .action(function () {
+        decodeFile(program.inFile, program.keyFile, program.outFile);
+    });
+
+program.parse(process.argv);
+
+function getKey(file){
+    try {
+        const fileKey = new fs.readFileSync(file);
+        var loadedKey = JSON.parse(fileKey).key.split(',');
+        return aesjs.util.convertStringToBytes(loadedKey);
+    }
+    catch(err){
+        console.error('Error: some shit with a key file!');
+    }
+}
+
+function encodeFile(inF, keyF, outF){
+    try {
+        const fileToEncode = new fs.readFileSync(inF);
+    }
+    catch(err){
+        console.error('Error: some shit with an input file!');
+    }
+    key = getKey(keyF);
+    var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
+    var encryptedBytes = aesCtr.encrypt(fileToEncode);
+    try{
+        fs.writeFileSync(outF, encryptedBytes)
+    }
+    catch(err){
+        console.error('Error: some shit with an output file!');
+    }
+    console.log('File: %s sucsessfully encrypted! The result is saved to %s', inF, outF);
+}
+
+function decodeFile(inF, keyF, outF){
+    try {
+        const fileToDecode = new fs.readFileSync(inF);
+    }
+    catch(err){
+        console.error('Error: some shit with an input file!');
+    }
+
+    key = getKey(keyF);
+
+    var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
+
+    var decryptedBytes = aesCtr.decrypt(fileToDecode);
+    var decryptedText = aesjs.util.convertBytesToString(decryptedBytes);
+
+    try{
+        fs.writeFileSync(outF, decryptedText);
+    }
+    catch(err){
+        console.error('Error: some shit with an output file!');
+    }
+    console.log('File: %s sucsessfully decrypted! The result is saved to %s', inF, outF);
+}
+
+module.exports.getKey = getKey;
+module.exports.encodeFile = encodeFile;
+module.exports.decodeFile = decodeFile;

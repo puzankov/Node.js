@@ -1,0 +1,33 @@
+{
+  "name": "encoder",
+  "version": "1.0.0",
+  "description": "AES-256 encoder/decoder",
+  "main": "index.js",
+  "dependencies": {
+    "aes-js": "^2.0.0",
+    "commander": "^2.9.0",
+    "jasmine": "^2.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jasmine spec/spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malykhin/encoder.git"
+  },
+  "keywords": [
+    "aes",
+    "encoder",
+    "decoder"
+  ],
+  "author": "Denys Malykhin",
+  "license": "ISC",
+  "bin": {
+    "encoder": "./index.js"
+  },
+  "bugs": {
+    "url": "https://github.com/malykhin/encoder/issues"
+  },
+  "homepage": "https://github.com/malykhin/encoder#readme"
+}

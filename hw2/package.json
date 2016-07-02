@@ -1,0 +1,35 @@
+{
+  "name": "scraper",
+  "version": "1.0.0",
+  "description": "scraper",
+  "main": "index.js",
+  "dependencies": {
+    "cheerio": "^0.20.0",
+    "express": "^4.14.0",
+    "got": "^6.3.0",
+    "needle": "^1.0.0",
+    "phantomjs": "^2.1.7",
+    "jasmine-node": "^1.14.5",
+    "jasmine": "^2.4.1",
+    "tress": "^1.0.3",
+    "url": "^0.11.0",
+    "querystring": "^0.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/malykhin/scraper.git"
+  },
+  "keywords": [
+    "scraper"
+  ],
+  "author": "Denys Malykgin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/malykhin/scraper/issues"
+  },
+  "homepage": "https://github.com/malykhin/scraper#readme"
+}
